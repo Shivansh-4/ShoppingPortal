@@ -1,4 +1,4 @@
-namespace ShoppingPortal.APi.DTOs;
+namespace ShoppingPortal.API.DTOs;
 
 public class ProductUpdateDTO
 {
