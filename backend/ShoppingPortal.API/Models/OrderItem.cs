@@ -1,4 +1,4 @@
-namespace ShoppingPortal.APi.Models;
+namespace ShoppingPortal.API.Models;
 
 public class OrderItem
 {

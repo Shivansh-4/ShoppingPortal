@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ShoppingPortal.APi.Data;
+using ShoppingPortal.API.Data;
 
 #nullable disable
 
 namespace ShoppingPortal.API.Migrations
 {
     [DbContext(typeof(ShoppingPortalDbContext))]
-    [Migration("20251231170411_InitialCreate")]
+    [Migration("20251231174511_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace ShoppingPortal.API.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.1");
 
-            modelBuilder.Entity("ShoppingPortal.APi.Models.Category", b =>
+            modelBuilder.Entity("ShoppingPortal.API.Models.Category", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -35,7 +35,7 @@ namespace ShoppingPortal.API.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("ShoppingPortal.APi.Models.Order", b =>
+            modelBuilder.Entity("ShoppingPortal.API.Models.Order", b =>
                 {
                     b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
@@ -55,7 +55,7 @@ namespace ShoppingPortal.API.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("ShoppingPortal.APi.Models.OrderItem", b =>
+            modelBuilder.Entity("ShoppingPortal.API.Models.OrderItem", b =>
                 {
                     b.Property<int>("OrderItemId")
                         .ValueGeneratedOnAdd()
@@ -82,7 +82,7 @@ namespace ShoppingPortal.API.Migrations
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("ShoppingPortal.APi.Models.Product", b =>
+            modelBuilder.Entity("ShoppingPortal.API.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
@@ -119,7 +119,7 @@ namespace ShoppingPortal.API.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("ShoppingPortal.APi.Models.Role", b =>
+            modelBuilder.Entity("ShoppingPortal.API.Models.Role", b =>
                 {
                     b.Property<int>("RoleId")
                         .ValueGeneratedOnAdd()
@@ -134,7 +134,7 @@ namespace ShoppingPortal.API.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("ShoppingPortal.APi.Models.User", b =>
+            modelBuilder.Entity("ShoppingPortal.API.Models.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -162,15 +162,15 @@ namespace ShoppingPortal.API.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ShoppingPortal.APi.Models.OrderItem", b =>
+            modelBuilder.Entity("ShoppingPortal.API.Models.OrderItem", b =>
                 {
-                    b.HasOne("ShoppingPortal.APi.Models.Order", "Order")
+                    b.HasOne("ShoppingPortal.API.Models.Order", "Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShoppingPortal.APi.Models.Product", "Product")
+                    b.HasOne("ShoppingPortal.API.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -181,9 +181,9 @@ namespace ShoppingPortal.API.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("ShoppingPortal.APi.Models.Product", b =>
+            modelBuilder.Entity("ShoppingPortal.API.Models.Product", b =>
                 {
-                    b.HasOne("ShoppingPortal.APi.Models.Category", "Category")
+                    b.HasOne("ShoppingPortal.API.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -192,9 +192,9 @@ namespace ShoppingPortal.API.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("ShoppingPortal.APi.Models.User", b =>
+            modelBuilder.Entity("ShoppingPortal.API.Models.User", b =>
                 {
-                    b.HasOne("ShoppingPortal.APi.Models.Role", "Role")
+                    b.HasOne("ShoppingPortal.API.Models.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -203,7 +203,7 @@ namespace ShoppingPortal.API.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("ShoppingPortal.APi.Models.Order", b =>
+            modelBuilder.Entity("ShoppingPortal.API.Models.Order", b =>
                 {
                     b.Navigation("OrderItems");
                 });

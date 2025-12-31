@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ShoppingPortal.APi.Data;
-using ShoppingPortal.APi.DTOs;
-using ShoppingPortal.APi.Models;
+using ShoppingPortal.API.Data;
+using ShoppingPortal.API.DTOs;
+using ShoppingPortal.API.Models;
 
-namespace ShoppingPortal.APi.Controllers;
+namespace ShoppingPortal.API.Controllers;
 
 [ApiController]
 [Route("api/auth")]
@@ -43,7 +43,7 @@ public class AuthController: ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginRequestDTO dto)
     {
-        var user = await dc.Users.FirstOrDefaultAsync(u=> u.Email == dto.Email && u.Password == dto.Password);
+        var user = await dc.Users.Include(u => u.Role).FirstOrDefaultAsync(u=> u.Email == dto.Email && u.Password == dto.Password);
         if (user == null)
         {
             return Unauthorized("Invalid email or password.");

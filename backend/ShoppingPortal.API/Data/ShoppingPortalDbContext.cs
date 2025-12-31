@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using ShoppingPortal.APi.Models;
+using ShoppingPortal.API.Models;
 
-namespace ShoppingPortal.APi.Data;
+namespace ShoppingPortal.API.Data;
 
 public class ShoppingPortalDbContext: DbContext
 {
