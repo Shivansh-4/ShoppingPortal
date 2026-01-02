@@ -1,0 +1,66 @@
+<div class="register-container">
+    <div class="register-card">
+        <h2> Register </h2>
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+            <div class="form-element">
+                <label for="r_name">Name: </label>
+                <input type="text" id="r_name" formControlName="name" />
+
+                <small class="error">
+                    <span *ngIf="submitted && f['name'].errors?.['required']">
+                        Name is required.
+                    </span>
+                </small>
+                <small class="error">
+                    <span *ngIf="submitted && f['name'].errors?.['minlength']">
+                        Name is too short.
+                    </span>
+                </small>
+                <small class="error">
+                    <span *ngIf="submitted && f['name'].errors?.['pattern']">
+                        Name is invalid.
+                    </span>
+                </small>
+            </div>
+
+            <div class="form-element">
+                <label for="r_email">Email: </label>
+                <input type="email" id="r_email" formControlName="email" />
+
+                <small class="error">
+                    <span *ngIf="submitted && f['email'].errors?.['required']">
+                        Email is required.
+                    </span>
+                </small>
+                <small class="error">
+                    <span *ngIf="submitted && f['email'].errors?.['email']">
+                        Email is invalid.
+                    </span>
+                </small>
+            </div>
+
+            <div class="form-element">
+                <label for="r_password">Password: </label>
+                <input type="password" id="r_password" formControlName="password" />
+
+                <small class="error">
+                    <span *ngIf="submitted && f['password'].errors?.['required']">
+                        Password is required.
+                    </span>
+                </small>
+                <small class="error">
+                    <span *ngIf="submitted && f['password'].errors?.['minlength']">
+                        Password is too short.
+                    </span>
+                </small>
+            </div>
+            
+            <button class="register-button">Register</button>
+            <small class="error">
+                <span *ngIf="error">Registration failed. Please try again.</span>
+            </small>
+            <p>Already have an account? <a routerLink="/login">Login</a></p>
+        
+        </form>
+    </div>
+</div>

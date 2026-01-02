@@ -1,0 +1,46 @@
+<div class="login-container">
+    <div class="login-card">
+        <h2> Login </h2>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="form-element">
+                <label for="email">Email: </label>
+                <input type="email" id="email" formControlName="email" />
+
+                <small class="error">
+                    <span *ngIf="submitted && f['email'].errors?.['required']">
+                        Email is required.
+                    </span>
+                </small>
+
+                <small class="error">
+                    <span *ngIf="submitted && f['email'].errors?.['email']">
+                        Email is invalid.
+                    </span>
+                </small>
+            </div>
+            <div class="form-element">
+                <label for="password">Password: </label>
+                <input type="password" id="password" formControlName="password" />
+
+                <small class="error">
+                    <span *ngIf="submitted && f['password'].errors?.['required']">
+                        Password is required.
+                    </span>
+                </small>
+
+                <small class="error">
+                    <span *ngIf="submitted && f['password'].errors?.['minlength']">
+                        Password is too short.
+                    </span>
+                </small>
+            </div>
+
+            <button class="login-button">Login</button>
+            <small class="error">
+                <span *ngIf="error">Invalid credentials.</span>
+            </small>
+            <p>Don't have an account? <a routerLink="/register">Signup</a></p>
+        </form>
+    </div>
+</div>
