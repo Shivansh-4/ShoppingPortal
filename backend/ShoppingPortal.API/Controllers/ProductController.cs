@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShoppingPortal.API.Data;
@@ -40,6 +41,7 @@ public class ProductController : ControllerBase
         return Ok(products);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> AddProduct(ProductCreateDTO dto)
     {
@@ -59,6 +61,7 @@ public class ProductController : ControllerBase
         return CreatedAtAction(nameof(AddProduct), product);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateProduct(int id, ProductCreateDTO dto)
     {
@@ -80,6 +83,7 @@ public class ProductController : ControllerBase
         return Ok("Product updated successfully.");
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteProduct(int id)
     {

@@ -1,7 +1,12 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using ShoppingPortal.API.Data;
 using ShoppingPortal.API.DTOs;
+using ShoppingPortal.API.Helper;
 using ShoppingPortal.API.Models;
 
 namespace ShoppingPortal.API.Controllers;
@@ -10,11 +15,15 @@ namespace ShoppingPortal.API.Controllers;
 [Route("api/auth")]
 public class AuthController: ControllerBase
 {
-    private ShoppingPortalDbContext dc;
+    private readonly ShoppingPortalDbContext dc;
+    private readonly IConfiguration config;
+    private JwtHelper helper;
 
-    public AuthController(ShoppingPortalDbContext context)
+    public AuthController(ShoppingPortalDbContext context, IConfiguration confi, JwtHelper h)
     {
         dc = context;
+        config = confi;
+        helper = h;
     }
 
     [HttpPost("register")]
@@ -49,11 +58,13 @@ public class AuthController: ControllerBase
             return Unauthorized("Invalid email or password.");
         }
 
+        var token = helper.GenerateToken(user.UserId, user.Role.RoleName);
+
         return Ok(new LoginResponseDTO
         {
             Message = "Login successful",
-            Token = "dummy",
-            Role = user.Role.RoleName
+            Role = user.Role.RoleName,
+            Token = token,
         });
     }
 
