@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using ShoppingPortal.API.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +43,8 @@ builder.Services.AddAuthentication(options =>
         )
     };
 });
+
+builder.Services.AddScoped<JwtHelper>();
 
 var app = builder.Build();
 

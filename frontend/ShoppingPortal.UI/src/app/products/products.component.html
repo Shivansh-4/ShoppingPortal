@@ -1,1 +1,39 @@
-<p>products works!</p>
+<div class="product-list">
+    <h2>Products</h2>
+
+    <div class="product-grid">
+        <div class="product-card" *ngFor="let p of products">
+
+            <img
+                [src]="p.imageUrl"
+                alt="{{ p.name }}"
+            />
+
+            <h3>{{ p.name }}</h3>
+            <p class="description">
+                {{ p.description }}
+            </p>
+
+            <p class="price">
+                {{ p.price }}
+            </p>
+
+            <p class="quantity" *ngIf="p.stock > 0">
+                <input type="number" min="0" max="p.stock" step="1" [(ngModel)]="p.quantity"/>
+            </p>
+
+            <p class="total-price" *ngIf="p.quantity > 0">
+                {{ p.quantity * p.price }}
+            </p>
+
+            <p class="out-of-stock" *ngIf="p.stock < 0">
+                Out of stock.
+            </p>
+
+             <button 
+                [disabled]="p.stock === 0">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+</div>
