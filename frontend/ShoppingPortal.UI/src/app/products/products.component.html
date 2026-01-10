@@ -6,31 +6,30 @@
 
             <img
                 [src]="p.imageUrl"
-                alt="{{ p.name }}"
             />
 
-            <h3>{{ p.name }}</h3>
+            <h3>{{ p.productName }}</h3>
             <p class="description">
                 {{ p.description }}
             </p>
 
             <p class="price">
-                {{ p.price }}
+                {{ p.price }}$
             </p>
 
             <p class="quantity" *ngIf="p.stock > 0">
-                <input type="number" min="0" max="p.stock" step="1" [(ngModel)]="p.quantity"/>
+                <input type="number" min="1" max="p.stock" step="1" [(ngModel)]="p.quantity"/>
             </p>
 
             <p class="total-price" *ngIf="p.quantity > 0">
-                {{ p.quantity * p.price }}
+                Total: {{ p.quantity * p.price }}$
             </p>
 
             <p class="out-of-stock" *ngIf="p.stock < 0">
                 Out of stock.
             </p>
 
-             <button 
+             <button (click)="addToCart(p)"
                 [disabled]="p.stock === 0">
                 Add to Cart
             </button>

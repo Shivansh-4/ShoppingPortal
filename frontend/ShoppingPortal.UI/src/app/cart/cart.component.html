@@ -1,0 +1,32 @@
+<div class="cart-container">
+  <h4>Your Cart</h4>
+
+  <div *ngIf="cartItems.length <= 0">
+    Your cart is empty
+  </div>
+
+  <div class="cart-item" *ngFor="let item of cartItems">
+      <img [src]="item.imageUrl" alt="">
+
+      <div class="details">
+        <h4>{{ item.productName }}</h4>
+
+        <h4> {{ item.price }} </h4>
+        <label>Quantity: </label>
+        <input type="number" placeholder="1" min="0" [max]="item.stock" [(ngModel)]="item.quantity"/>
+
+        <p>Total Price: {{ item.quantity * item.price }} </p>
+      </div>
+
+      <button type="button" (click)="removeItem(item.productId)">Remove</button>
+  </div>
+
+  <div *ngIf="cartItems.length > 0">
+    Grand Total: ${{ getTotal() }}
+    <br>
+    <button class="checkout-btn"
+    (click)="placeOrder()">
+      Checkout
+    </button>
+  </div>
+</div>

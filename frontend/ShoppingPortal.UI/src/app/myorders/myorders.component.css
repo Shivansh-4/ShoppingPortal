@@ -1,0 +1,40 @@
+.orders-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+.order-card {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+}
+
+.date {
+  color: #666;
+  font-size: 14px;
+  margin: 6px 0 12px;
+}
+
+.items {
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+}
+
+.empty {
+  text-align: center;
+  margin-top: 40px;
+}

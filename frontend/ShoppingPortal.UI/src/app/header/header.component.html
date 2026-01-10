@@ -1,0 +1,23 @@
+<nav class="navbar">
+  <div class="nav-left">
+    <a routerLink="/" class="logo">ShoppingPortal</a>
+  </div>
+
+  <ul class="nav-links">
+    <li><a routerLink="/products">Home</a></li>
+    <li><a routerLink="/about">About</a></li>
+    <li><a routerLink="/products">Products</a></li>
+
+    <!-- Admin only -->
+    <li *ngIf="isAdmin">
+      <a routerLink="/admin">Admin</a>
+    </li>
+
+    <li><a routerLink="/cart">Cart ({{ cartCount }})</a></li>
+    <li><a routerLink="/orders">My Orders</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <button (click)="logout()">Logout</button>
+  </div>
+</nav>

@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 export interface CartItem{
   productId: number,
   productName: string,
   price: number,
   quantity: number,
-  imageUrl: string;
+  imageUrl: string,
+  stock: number;
 }
 
 @Injectable({
@@ -14,11 +16,20 @@ export interface CartItem{
 export class CartService {
 
   private cartItems: CartItem[] = [];
+  private cartSubject = new BehaviorSubject<CartItem[]>([]);
+  cart$ = this.cartSubject.asObservable();
 
-  constructor() { }
+  constructor() {
+    const cart = localStorage.getItem('cart');
+    if(cart){
+      this.cartItems = JSON.parse(cart);
+      this.cartSubject.next(this.cartItems);
+    }
+  }
 
   saveCart(): void{
     localStorage.setItem('cart', JSON.stringify(this.cartItems));
+    this.cartSubject.next(this.cartItems);
   }
 
   addToCart(item: CartItem): void{
@@ -41,12 +52,8 @@ export class CartService {
 
   UpdateQuantity(productId: number, quantity: number): void{
     const prod = this.cartItems.find(i => i.productId === productId);
-    if(prod){
+    if(prod && quantity > 0){
       prod.quantity = quantity;
-
-      if(prod.quantity <= 0){
-        this.removeFromCart(productId);
-      }
       this.saveCart();
     }
   }
@@ -58,6 +65,7 @@ export class CartService {
   clearCart(): void{
     this.cartItems = [];
     localStorage.removeItem('cart');
+    this.cartSubject.next(this.cartItems);
   }
 
   getTotalPrice(): number{
