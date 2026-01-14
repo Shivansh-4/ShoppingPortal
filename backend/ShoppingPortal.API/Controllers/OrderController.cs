@@ -79,7 +79,9 @@ public class OrderController: ControllerBase
             {
                 ProductName = oi.Product.ProductName,
                 Quantity = oi.Quantity,
-                Price = oi.Price
+                Price = oi.Price,
+                CategoryId = oi.Product.CategoryId,
+                CategoryName = oi.Product.Category != null && oi.Product.Category != null ? oi.Product.Category.CategoryName : "Uncategorized"
             }).ToList()
         }).ToListAsync();
 

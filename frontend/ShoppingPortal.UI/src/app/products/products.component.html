@@ -1,38 +1,49 @@
 <div class="product-list">
-    <h2>Products</h2>
+    <div class="hero-section">
+        <h1>Our Products</h1>
+        <p>Discover amazing products at great prices</p>
+        <div class="hero-actions" *ngIf="!isAdmin">
+            <a routerLink="/dashboard" class="dashboard-btn">View My Dashboard</a>
+        </div>
+    </div>
+
+    <div class="filters-section">
+        <input type="text" placeholder="Search products..." [(ngModel)]="searchTerm" (input)="filterProducts()" class="search-input">
+        <select [(ngModel)]="selectedCategory" (change)="filterProducts()" class="category-select">
+            <option value="">All Categories</option>
+            <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+        </select>
+    </div>
 
     <div class="product-grid">
-        <div class="product-card" *ngFor="let p of products">
-
-            <img
-                [src]="p.imageUrl"
-            />
+        <div class="product-card" *ngFor="let p of filteredProducts">
+            <img [src]="p.imageUrl" alt="{{ p.productName }}" class="product-image" />
 
             <h3>{{ p.productName }}</h3>
-            <p class="description">
-                {{ p.description }}
-            </p>
+            <p class="description">{{ p.description }}</p>
 
-            <p class="price">
-                {{ p.price }}$
-            </p>
+            <div class="price-section">
+                <span class="price">${{ p.price }}</span>
+                <span class="stock" *ngIf="p.stock > 0">In Stock: {{ p.stock }}</span>
+                <span class="out-of-stock" *ngIf="p.stock <= 0">Out of Stock</span>
+            </div>
 
-            <p class="quantity" *ngIf="p.stock > 0">
-                <input type="number" min="1" max="p.stock" step="1" [(ngModel)]="p.quantity"/>
-            </p>
+            <div class="quantity-section" *ngIf="p.stock > 0">
+                <label>Quantity:</label>
+                <input type="number" min="1" [max]="p.stock" step="1" [(ngModel)]="p.quantity" class="quantity-input"/>
+            </div>
 
-            <p class="total-price" *ngIf="p.quantity > 0">
-                Total: {{ p.quantity * p.price }}$
-            </p>
+            <div class="total-price" *ngIf="p.quantity > 0">
+                Total: ${{ p.quantity * p.price }}
+            </div>
 
-            <p class="out-of-stock" *ngIf="p.stock < 0">
-                Out of stock.
-            </p>
-
-             <button (click)="addToCart(p)"
-                [disabled]="p.stock === 0">
+            <button (click)="addToCart(p)" [disabled]="p.stock === 0 || !p.quantity || p.quantity <= 0" class="add-to-cart-btn">
                 Add to Cart
             </button>
         </div>
+    </div>
+
+    <div *ngIf="filteredProducts.length === 0" class="no-products">
+        <p>No products found matching your criteria.</p>
     </div>
 </div>

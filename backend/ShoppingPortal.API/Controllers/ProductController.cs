@@ -22,7 +22,7 @@ public class ProductController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllProducts()
     {
-        var products = await dc.Products.Select(p => new ProductResponseDTO
+        var products = await dc.Products.Include(p => p.Category).Select(p => new ProductResponseDTO
         {
             ProductId = p.ProductId,
             ProductName = p.ProductName,
@@ -30,7 +30,8 @@ public class ProductController : ControllerBase
             Price = p.Price,
             Stock = p.Stock,
             ImageUrl = p.ImageUrl,
-            CategoryId = p.CategoryId
+            CategoryId = p.CategoryId,
+            CategoryName = p.Category != null ? p.Category.CategoryName : "Uncategorized"
         }).ToListAsync();
 
         if(products.Count == 0)
@@ -39,6 +40,30 @@ public class ProductController : ControllerBase
         }
 
         return Ok(products);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetProduct(int id)
+    {
+        var product = await dc.Products.Include(p => p.Category).FirstOrDefaultAsync(p => p.ProductId == id);
+        if (product == null)
+        {
+            return NotFound("Product not found.");
+        }
+
+        var productDto = new ProductResponseDTO
+        {
+            ProductId = product.ProductId,
+            ProductName = product.ProductName,
+            Description = product.Description,
+            Price = product.Price,
+            Stock = product.Stock,
+            ImageUrl = product.ImageUrl,
+            CategoryId = product.CategoryId,
+            CategoryName = product.Category?.CategoryName ?? "Uncategorized"
+        };
+
+        return Ok(productDto);
     }
 
     [Authorize(Roles = "Admin")]

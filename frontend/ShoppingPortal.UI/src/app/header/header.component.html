@@ -8,9 +8,18 @@
     <li><a routerLink="/about">About</a></li>
     <li><a routerLink="/products">Products</a></li>
 
+    <!-- Non-admin users -->
+    <li *ngIf="!isAdmin">
+      <a routerLink="/dashboard">Dashboard</a>
+    </li>
+
     <!-- Admin only -->
-    <li *ngIf="isAdmin">
-      <a routerLink="/admin">Admin</a>
+    <li *ngIf="isAdmin" class="dropdown">
+      <a href="#" class="dropbtn">Admin</a>
+      <ul class="dropdown-content">
+        <li><a routerLink="/manage-products">Manage Products</a></li>
+        <li><a routerLink="/add-product">Add Products</a></li>
+      </ul>
     </li>
 
     <li><a routerLink="/cart">Cart ({{ cartCount }})</a></li>

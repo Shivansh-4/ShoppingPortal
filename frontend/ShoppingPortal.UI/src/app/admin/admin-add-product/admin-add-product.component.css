@@ -1,0 +1,85 @@
+.add-product-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  min-height: calc(100vh - 200px); /* Ensure content can scroll */
+}
+
+h2 {
+  text-align: center;
+  color: #e91e63; /* Pink */
+  margin-bottom: 20px;
+}
+
+.add-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #ad1457; /* Darker pink */
+  font-weight: bold;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #f8bbd9; /* Light pink */
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #e91e63; /* Pink */
+  box-shadow: 0 0 5px rgba(233, 30, 99, 0.5);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.add-btn, .cancel-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-btn {
+  background-color: #e91e63; /* Pink */
+  color: white;
+}
+
+.add-btn:hover {
+  background-color: #c2185b; /* Darker pink */
+}
+
+.cancel-btn {
+  background-color: #f8bbd9; /* Light pink */
+  color: #ad1457; /* Darker pink */
+}
+
+.cancel-btn:hover {
+  background-color: #f48fb1; /* Medium pink */
+}
