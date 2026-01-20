@@ -11,6 +11,7 @@ import { CartService } from '../services/cart.service';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit{
+  isLoggedin = true;
   isAdmin = false;
   cartCount = 0;
 
@@ -28,5 +29,6 @@ export class HeaderComponent implements OnInit{
   logout(){
     sessionStorage.clear();
     this.router.navigate(['/login']);
+    this.isLoggedin = false;
   }
 }

@@ -1,3 +1,4 @@
+<!--
 <div class="product-list">
     <h2>Products</h2>
 
@@ -31,6 +32,46 @@
 
              <button (click)="addToCart(p)"
                 [disabled]="p.stock === 0">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+</div>
+-->
+
+<div class="product-list">
+    <div class="hero-section">
+        <h1>Our Products</h1>
+        <p>Discover amazing products at great prices!</p>
+        <div class="hero-actions">
+            <a routerLink="/dashboard" class="dashboard-btn">My Dashboard</a>
+        </div>
+    </div>
+
+    <div class="product-grid">
+        <div class="product-card" *ngFor="let item of products">
+            <img [src]="item.imageUrl" class="product-image">
+
+            <h3> {{ item.productName }} </h3>
+            <p class="product-description"> {{ item.description }}</p>
+            
+            <div class="price-section">
+                <span class="price">₹{{ item.price }}</span>
+                <span class="stock" *ngIf="item.stock > 0">In stock: {{ item.stock }}</span>
+                <span class="stock" *ngIf="item.stock < 10 && item.stock > 0">Limited stock: {{ item.stock }}</span>
+                <span class="out-of-stock" *ngIf="item.stock <= 0">Out of Stock</span>
+            </div>
+
+            <div class="quantity-section" *ngIf="item.stock > 0">
+                <label>Quantity: </label>
+                <input type="number" min="1" [max]="item.stock" step="1" [(ngModel)]="item.quantity" class="quantity-input" />
+            </div>
+
+            <div class="total-price" *ngIf="item.quantity > 0">
+                Total: ₹{{ item.quantity * item.price }}
+            </div>
+
+            <button (click)="addToCart(item)" [disabled]="item.stock === 0 || !item.quantity || item.quantity <= 0" class="add-to-cart-btn">
                 Add to Cart
             </button>
         </div>

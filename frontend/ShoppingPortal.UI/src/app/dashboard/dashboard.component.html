@@ -1,0 +1,16 @@
+<div class="dashboard-container">
+    <h2>Spending Overview</h2>
+    <p>Category-wise expenditure</p>
+
+    <div class="pie-chart">
+        <div class="hide-chart" *ngIf="dashItem.length <= 0">
+            <p>No purchases yet.</p>
+            <a routerLink="/products">Start Shopping</a>
+        </div>
+        <div class="show-chart" *ngIf="dashItem.length > 0">
+            <div class="category-list" >
+
+            </div>
+        </div>
+    </div>
+</div>

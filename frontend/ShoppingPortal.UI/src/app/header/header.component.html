@@ -1,23 +1,33 @@
-<nav class="navbar">
+<div class="navbar">
   <div class="nav-left">
-    <a routerLink="/" class="logo">ShoppingPortal</a>
+    <a routerLink="" class="logo">Shopping Portal</a>
   </div>
 
-  <ul class="nav-links">
-    <li><a routerLink="/products">Home</a></li>
-    <li><a routerLink="/about">About</a></li>
-    <li><a routerLink="/products">Products</a></li>
+  <div class="nav-links">
+    <li> <a routerLink="/products">Home</a> </li>
+    <li> <a routerLink="/about">About</a></li>
+    <li> <a routerLink="/products">Products</a></li>
 
-    <!-- Admin only -->
-    <li *ngIf="isAdmin">
-      <a routerLink="/admin">Admin</a>
+    <li *ngIf="!isAdmin">
+      <a routerLink="/dashboard">Dashboard</a>
     </li>
 
-    <li><a routerLink="/cart">Cart ({{ cartCount }})</a></li>
-    <li><a routerLink="/orders">My Orders</a></li>
-  </ul>
+    <li *ngIf="isAdmin" class="dropdown">
+      <a href="#" class="dropbtn">Admin</a>
+      <ul class="dropdown-content">
+        <li><a routerLink="/admin-manage">Manage Products</a> </li>
+        <li><a routerLink="/admin-add">Add Product</a> </li>
+      </ul>
+    </li>
 
-  <div class="nav-right">
-    <button (click)="logout()">Logout</button>
+    <li> <a routerLink="/cart">Cart ({{ cartCount }}) </a></li>
+    <li> <a routerLink="/orders">My Orders</a></li>
   </div>
-</nav>
+
+  <div class="nav-right" *ngIf="isLoggedin">
+    <button class="logout-button"
+    (click)="logout()">
+      Logout
+    </button>
+  </div>
+</div>

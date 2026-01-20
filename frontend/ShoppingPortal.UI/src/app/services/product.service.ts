@@ -25,4 +25,20 @@ export class ProductService {
   getAllProducts(): Observable<any>{
     return this.http.get<any[]>(this.url);
   }
+
+  getProductBygId(id: number): Observable<any>{
+    return this.http.get<any>(`${this.url}/${id}`);
+  }
+
+  editProduct(id: number, data: any): Observable<string>{
+    return this.http.put(`${this.url}/${id}`, data, { responseType: 'text' });
+  }
+
+  removeProduct(id: number): Observable<any>{
+    return this.http.delete<any>(`${this.url}/${id}`);
+  }
+
+  addProduct(data: any): Observable<any>{
+    return this.http.post<any>(this.url, data);
+  }
 }

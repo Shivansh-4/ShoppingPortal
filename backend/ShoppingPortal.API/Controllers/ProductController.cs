@@ -41,6 +41,30 @@ public class ProductController : ControllerBase
         return Ok(products);
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetProductById(int id)
+    {
+        var product = await dc.Products.FindAsync(id);
+
+        if (product == null)
+        {
+            return NotFound("No produt found with this Product ID");
+        }
+
+        var response = new ProductResponseDTO
+        {
+            ProductId = product.ProductId,
+            ProductName = product.ProductName,
+            Description = product.Description,
+            ImageUrl = product.ImageUrl,
+            Price = product.Price,
+            Stock = product.Stock,
+            CategoryId = product.CategoryId
+        };
+
+        return Ok(response);
+    }
+
     [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> AddProduct(ProductCreateDTO dto)

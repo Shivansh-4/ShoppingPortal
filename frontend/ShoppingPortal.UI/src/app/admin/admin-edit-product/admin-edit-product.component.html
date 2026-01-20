@@ -1,0 +1,33 @@
+<div class="edit-product-container">
+  <h2>Edit Product</h2>
+  <form (ngSubmit)="saveProduct()" class="edit-form">
+    <div class="form-group">
+      <label for="productName">Product Name:</label>
+      <input type="text" id="productName" [(ngModel)]="product.productName" name="productName" required>
+    </div>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea id="description" [(ngModel)]="product.description" name="description" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="categoryId">Category ID:</label>
+      <input type="number" id="categoryId" [(ngModel)]="product.categoryId" name="categoryId" required>
+    </div>
+    <div class="form-group">
+      <label for="stock">Stock:</label>
+      <input type="number" id="stock" [(ngModel)]="product.stock" name="stock" required>
+    </div>
+    <div class="form-group">
+      <label for="price">Price:</label>
+      <input type="number" id="price" [(ngModel)]="product.price" name="price" step="0.01" required>
+    </div>
+    <div class="form-group">
+      <label for="imageUrl">Image URL:</label>
+      <input type="text" id="imageUrl" [(ngModel)]="product.imageUrl" name="imageUrl" required>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="save-btn">Save</button>
+      <button type="button" (click)="cancel()" class="cancel-btn">Cancel</button>
+    </div>
+  </form>
+</div>

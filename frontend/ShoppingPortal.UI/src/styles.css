@@ -5,5 +5,10 @@ html, body {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: auto; /* Changed from hidden to auto for scrolling */
+}
+
+/* Account for fixed header */
+body {
+  margin-top: 100px; /* Adjust based on header height */
 }

@@ -1,0 +1,106 @@
+.manage-products-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fce4ec; /* Very light pink */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  min-height: calc(100vh - 200px); /* Ensure content can scroll */
+}
+
+h1{
+  text-align: center;
+  color: #e91e63;
+  margin-bottom: 20px;
+  font-size: 2em;
+}
+
+.actions-bar {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.add-product-btn {
+  background-color: #e91e63;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-product-btn:hover {
+  background-color: #c2185b;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.products-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.products-table th,
+.products-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #f8bbd9; /* Light pink */
+}
+
+.products-table th {
+  background-color: #f8bbd9;
+  color: #ad1457;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.products-table th :hover {
+  background-color: #fce4ec;
+}
+
+.products-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn, .delete-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.edit-btn {
+  background-color: #e91e63; /* Pink */
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #c2185b; /* Darker pink */
+}
+
+.delete-btn {
+  background-color: #f48fb1; /* Light pink */
+  color: #ad1457; /* Darker pink */
+}
+
+.delete-btn:hover {
+  background-color: #e91e63; /* Pink */
+  color: white;
+}

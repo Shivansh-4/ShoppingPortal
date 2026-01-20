@@ -20,7 +20,7 @@ export class CartService {
   cart$ = this.cartSubject.asObservable();
 
   constructor() {
-    const cart = localStorage.getItem('cart');
+    const cart = sessionStorage.getItem('cart');
     if(cart){
       this.cartItems = JSON.parse(cart);
       this.cartSubject.next(this.cartItems);
@@ -28,7 +28,7 @@ export class CartService {
   }
 
   saveCart(): void{
-    localStorage.setItem('cart', JSON.stringify(this.cartItems));
+    sessionStorage.setItem('cart', JSON.stringify(this.cartItems));
     this.cartSubject.next(this.cartItems);
   }
 
@@ -64,7 +64,7 @@ export class CartService {
 
   clearCart(): void{
     this.cartItems = [];
-    localStorage.removeItem('cart');
+    sessionStorage.removeItem('cart');
     this.cartSubject.next(this.cartItems);
   }
 
@@ -77,7 +77,7 @@ export class CartService {
   }
 
   loadCart(): void{
-    const cart = localStorage.getItem('cart');
+    const cart = sessionStorage.getItem('cart');
     if(cart){
       this.cartItems = JSON.parse(cart);
     }

@@ -1,32 +1,34 @@
 <div class="cart-container">
-  <h4>Your Cart</h4>
+  <h2>Your Cart</h2>
 
-  <div *ngIf="cartItems.length <= 0">
-    Your cart is empty
+  <div class="empty-cart" *ngIf="cartItems.length <= 0">
+    <h3>Your cart is empty🛒.</h3>
+    <p>Looks like you haven't added any products to the cart yet.</p>
+    <a routerLink="/products" class="products-link">Start Shopping</a>
   </div>
 
   <div class="cart-item" *ngFor="let item of cartItems">
-      <img [src]="item.imageUrl" alt="">
+    <img [src]="item.imageUrl" class="cart-item-image"/>
 
-      <div class="details">
-        <h4>{{ item.productName }}</h4>
-
-        <h4> {{ item.price }} </h4>
+    <div class="cart-details">
+      <h3> {{ item.productName }} </h3>
+      <p class="Price">Price: {{ item.price }} </p>
+      <div class="quantity-control">
         <label>Quantity: </label>
-        <input type="number" placeholder="1" min="0" [max]="item.stock" [(ngModel)]="item.quantity"/>
-
-        <p>Total Price: {{ item.quantity * item.price }} </p>
+        <input type="text" class="quantity-input" min="1" [max]="item.stock" [(ngModel)]="item.quantity"
+        (ngModelChange)="updateQuantity(item.productId, item.quantity)">
       </div>
+      <p class="total-price">Total: {{ item.quantity * item.price }} </p>
+    </div>
 
-      <button type="button" (click)="removeItem(item.productId)">Remove</button>
+    <button type="button" (click)="removeItem(item.productId)" class="remove-btn">Remove</button>
   </div>
 
-  <div *ngIf="cartItems.length > 0">
-    Grand Total: ${{ getTotal() }}
-    <br>
-    <button class="checkout-btn"
-    (click)="placeOrder()">
-      Checkout
-    </button>
+  <div *ngIf="cartItems.length > 0" class="checkout-section">
+    <div class="grand-total">
+      <strong>Grand Total: {{ getTotal() }} </strong>
+    </div>
+    <button type="button" class="checkout-btn" (click)="placeOrder()">Checkout</button>
   </div>
+
 </div>

@@ -3,11 +3,12 @@ import { Product, ProductService } from '../services/product.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ɵInternalFormsSharedModule } from "@angular/forms";
 import { CartService } from '../services/cart.service';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, ɵInternalFormsSharedModule, FormsModule],
+  imports: [CommonModule, ɵInternalFormsSharedModule, FormsModule, RouterLink],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
