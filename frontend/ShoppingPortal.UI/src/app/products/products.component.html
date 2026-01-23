@@ -48,8 +48,16 @@
         </div>
     </div>
 
+    <div class="filter-section">
+        <label>Filter By Category: </label>
+        <select [(ngModel)]="selectedCategoryFilter" (ngModelChange)="filterProductsByCat($event)" class="filter-select">
+            <option value="">All</option>            
+            <option *ngFor="let cat of categories" [ngValue]="cat.categoryId">{{ cat.categoryName }}</option>
+        </select>
+    </div>
+
     <div class="product-grid">
-        <div class="product-card" *ngFor="let item of products">
+        <div class="product-card" *ngFor="let item of displayedProducts">
             <img [src]="item.imageUrl" class="product-image">
 
             <h3> {{ item.productName }} </h3>
@@ -57,7 +65,7 @@
             
             <div class="price-section">
                 <span class="price">₹{{ item.price }}</span>
-                <span class="stock" *ngIf="item.stock > 0">In stock: {{ item.stock }}</span>
+                <span class="stock" *ngIf="item.stock > 0">In stock</span>
                 <span class="stock" *ngIf="item.stock < 10 && item.stock > 0">Limited stock: {{ item.stock }}</span>
                 <span class="out-of-stock" *ngIf="item.stock <= 0">Out of Stock</span>
             </div>

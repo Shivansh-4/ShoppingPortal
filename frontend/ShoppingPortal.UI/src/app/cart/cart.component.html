@@ -12,13 +12,13 @@
 
     <div class="cart-details">
       <h3> {{ item.productName }} </h3>
-      <p class="Price">Price: {{ item.price }} </p>
+      <p class="Price">Price: ₹{{ item.price }} </p>
       <div class="quantity-control">
         <label>Quantity: </label>
         <input type="text" class="quantity-input" min="1" [max]="item.stock" [(ngModel)]="item.quantity"
         (ngModelChange)="updateQuantity(item.productId, item.quantity)">
       </div>
-      <p class="total-price">Total: {{ item.quantity * item.price }} </p>
+      <p class="total-price">Total: ₹{{ item.quantity * item.price }} </p>
     </div>
 
     <button type="button" (click)="removeItem(item.productId)" class="remove-btn">Remove</button>
@@ -26,7 +26,7 @@
 
   <div *ngIf="cartItems.length > 0" class="checkout-section">
     <div class="grand-total">
-      <strong>Grand Total: {{ getTotal() }} </strong>
+      <strong>Grand Total: ₹{{ getTotal() }} </strong>
     </div>
     <button type="button" class="checkout-btn" (click)="placeOrder()">Checkout</button>
   </div>

@@ -1,16 +1,55 @@
 <div class="dashboard-container">
-    <h2>Spending Overview</h2>
-    <p>Category-wise expenditure</p>
-
-    <div class="pie-chart">
-        <div class="hide-chart" *ngIf="dashItem.length <= 0">
-            <p>No purchases yet.</p>
-            <a routerLink="/products">Start Shopping</a>
+    <h2>My Dashboard</h2>
+    <div class="summary-cards">
+        <div class="card">
+            <p>Total Spent</p>
+            ₹{{ getTotalSpend() }}
         </div>
-        <div class="show-chart" *ngIf="dashItem.length > 0">
-            <div class="category-list" >
+        <div class="card">
+            <p>Top Category</p>
+            {{ getTopCategory() }}
+        </div>
+        <div class="card">
+            <p>Categories</p>
+            {{ dashItem.length }}
+        </div>
+    </div>
 
+    <div class="filter-section">
+        <div class="start-date">
+            <label>Start Date: </label>
+            <input type="date" [(ngModel)]="startDate" />
+        </div>
+        <div class="end-date">
+            <label>End Date: </label>
+            <input type="date" [(ngModel)]="endDate" />
+        </div>
+        <button type="button" [disabled]="!startDate || !endDate" (click)="filterDashboard()" >Apply</button>
+        <button type="button" (click)="resetFilter()">Reset</button>
+    </div>
+
+    <div class="chart-section">
+        <div class="pie-chart">
+            <div class="hide-chart" *ngIf="displayedLabels.length === 0">
+                <p>No products bought yet.</p>
+                <a routerLink="/products">Start Shopping</a>
             </div>
+            <div class="show-chart" *ngIf="dashItem.length > 0">
+                <canvas baseChart [type]="pieChartType" [data]="displayedData" [options]="pieChartOptions">
+
+                </canvas>
+            </div>
+        </div>
+
+        <div class="category-breakdown">
+            <ul>
+                <li *ngFor="let item of displayedLabels, let i = index">
+                    <span *ngIf="displayedLabels.length <= 0">No Products bought dusring this time period</span>
+                    <span class="dot" [style.backgroundColor]="colors[i]"></span>
+                    <span>{{ item.category }}</span>
+                    <strong>₹{{ item.spend }}</strong>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
