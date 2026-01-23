@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { filter, Observable } from 'rxjs';
 
 export interface dashboardItems{
-  Category: string,
-  Spend: number
+  category: string,
+  spend: number
 }
 
 @Injectable({
@@ -16,7 +16,12 @@ export class DashboardService {
 
   constructor(private http: HttpClient) { }
 
-  GetData():Observable<any>{
-    return this.http.get<any>(this.Url);
+  GetData():Observable<dashboardItems[]>{
+    return this.http.get<dashboardItems[]>(this.Url);
+  }
+
+  GetFilteredData(d1: string, d2: string): Observable<dashboardItems[]>{
+    const params = new HttpParams().set('d1', d1).set('d2', d2);
+    return this.http.get<dashboardItems[]>(`${this.Url}/filter`, {params});
   }
 }

@@ -41,4 +41,8 @@ export class ProductService {
   addProduct(data: any): Observable<any>{
     return this.http.post<any>(this.url, data);
   }
+
+  filterProducts(id: number): Observable<any>{
+    return this.http.get(`${this.url}/product-by-category/${id}`);
+  }
 }

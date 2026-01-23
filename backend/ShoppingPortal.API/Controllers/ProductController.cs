@@ -123,4 +123,27 @@ public class ProductController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpGet("product-by-category/{categoryId}")]
+    public async Task<IActionResult> GetProductByCategory(int categoryId)
+    {
+        var filteredProducts = await dc.Products.Where(c => c.CategoryId == categoryId).Select(p => new ProductResponseDTO
+        {
+            ProductId = p.ProductId,
+            ProductName = p.ProductName,
+            Price = p.Price,
+            Stock = p.Stock,
+            ImageUrl = p.ImageUrl,
+            CategoryId = p.CategoryId,
+            Description = p.Description
+        }).ToListAsync();
+
+        if (filteredProducts.Count <= 0)
+        {
+            return NotFound("No products found with this category");
+        }
+
+        return Ok(filteredProducts);
+    }
+
 }
