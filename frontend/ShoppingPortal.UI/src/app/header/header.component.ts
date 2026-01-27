@@ -22,7 +22,8 @@ export class HeaderComponent implements OnInit{
     this.isAdmin = role === 'Admin';
 
     this.cartService.cart$.subscribe(i => {
-      this.cartCount = i.reduce((sum, c) => sum += c.quantity, 0)
+      //this.cartCount = i.reduce((sum, c) => sum += c.quantity, 0)
+      this.cartCount = i.length;
     })
   }
 
