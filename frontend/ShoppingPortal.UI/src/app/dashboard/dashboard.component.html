@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <div class="filter-section">
+    <div class="filter-section" *ngIf="displayedLabels.length > 0">
         <div class="start-date">
             <label>Start Date: </label>
             <input type="date" [(ngModel)]="startDate" />
@@ -34,7 +34,7 @@
                 <p>No products bought yet.</p>
                 <a routerLink="/products">Start Shopping</a>
             </div>
-            <div class="show-chart" *ngIf="dashItem.length > 0">
+            <div class="show-chart" *ngIf="displayedLabels.length > 0">
                 <canvas baseChart [type]="pieChartType" [data]="displayedData" [options]="pieChartOptions">
 
                 </canvas>
@@ -42,14 +42,17 @@
         </div>
 
         <div class="category-breakdown">
-            <ul>
+            <ul *ngIf="displayedLabels.length > 0; else noData">
                 <li *ngFor="let item of displayedLabels, let i = index">
-                    <span *ngIf="displayedLabels.length <= 0">No Products bought dusring this time period</span>
                     <span class="dot" [style.backgroundColor]="colors[i]"></span>
                     <span>{{ item.category }}</span>
                     <strong>₹{{ item.spend }}</strong>
                 </li>
             </ul>
+
+            <ng-template #noData>
+                <p>No Products bought during this period</p>
+            </ng-template>
         </div>
     </div>
 </div>

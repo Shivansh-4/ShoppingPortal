@@ -80,6 +80,7 @@ export class DashboardComponent implements OnInit{
   }
 
   getTopCategory(): string{
+    if(this.dashItem.length === 0) return '-';
     const top = [...this.dashItem].sort((a,b) => b.spend - a.spend)[0];
     return top.category;
   }

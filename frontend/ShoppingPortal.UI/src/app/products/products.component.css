@@ -125,6 +125,53 @@
 
 .quantity-section {
   margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.qty-btn{
+  width: 27px;
+  height: 27px;
+  background: linear-gradient(135deg, #f43f5e, #be123c);
+  border: none;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+
+.qty-btn:hover:not(:disabled){
+  transform: scale(1.08);
+  box-shadow: 0 4px 8px rgba(244, 63, 94, 0.35);
+}
+
+.qty-btn:active:not(:disabled){
+  transform: scale(0.95);
+}
+
+.qty-btn:disabled{
+  background: #d1d5db;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.qty-value{
+  min-width: 24px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 15px;
+  color: #111827;
 }
 
 .quantity-section label {
@@ -132,20 +179,7 @@
   margin-bottom: 5px;
   color: #374151;
   font-weight: 500;
-}
-
-.quantity-input {
-  width: 80px;
-  padding: 8px;
-  border: 1px solid #fbcfe8;
-  border-radius: 4px;
-  text-align: center;
-  font-size: 14px;
-}
-
-.quantity-input:focus{
-  outline: none;
-  border-color: #f43f5e;
+  white-space: nowrap;
 }
 
 .total-price {
@@ -221,7 +255,6 @@
     transition: all 0.2s ease;
 }
 
-/* Focus and Hover states */
 .filter-select:hover {
     border-color: #9ca3af;
     background-color: #ffffff;

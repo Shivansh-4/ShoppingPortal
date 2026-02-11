@@ -1,13 +1,8 @@
-using System.Numerics;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
-using ShoppingPortal.API.Data;
-using ShoppingPortal.API.DTOs;
-using ShoppingPortal.API.Models;
+
+using ShoppingPortal.API.Services;
 
 namespace ShoppingPortal.API.Controllers;
 
@@ -15,11 +10,11 @@ namespace ShoppingPortal.API.Controllers;
 [Route("api/dashboard")]
 public class DashboardController: ControllerBase
 {
-    private readonly ShoppingPortalDbContext dc;
+    private readonly IDashboardService dService;
 
-    public DashboardController(ShoppingPortalDbContext context)
+    public DashboardController(IDashboardService service)
     {
-        dc = context;
+        dService = service;
     }
 
     [HttpGet]
@@ -28,51 +23,18 @@ public class DashboardController: ControllerBase
     {
         int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        if (userId == null)
-        {
-            return NotFound("User not found.");
-        }
-        
-        var data = await dc.Orders.Where(u => u.UserId == userId).SelectMany(o => o.OrderItems).
-        Select(items => new
-        {
-            CategoryName = items.Product.Category.CategoryName,
-            Total = items.Quantity * items.Price
-        }).GroupBy(c => c.CategoryName).Select(g => new DashboardResponseDTO
-        {
-            Category = g.Key,
-            Spend = g.Sum(x => x.Total)
-        }).ToArrayAsync();
-        
+        var data = await dService.GetCategoryWiseDataAsync(userId);
+
         return Ok(data);
     }
 
+    [Authorize]
     [HttpGet("filter")]
     public async Task<IActionResult> GetDashboardFilteredData([FromQuery] DateTime d1, [FromQuery] DateTime d2)
-    {   
-
-        if(d1 >= d2)
-        {
-            return NoContent();
-        }
-
+    {
         int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        if(userId == null)
-        {
-            return NotFound("User not found.");
-        }
-
-        var data = await dc.Orders.Where(u => u.UserId == userId).Where(o => o.OrderDate >= d1 && o.OrderDate <= d2).SelectMany(oi => oi.OrderItems)
-        .Select(items => new
-        {
-            CategoryName = items.Product.Category.CategoryName,
-            Total = items.Quantity * items.Price
-        }).GroupBy(g => g.CategoryName).Select(z => new DashboardResponseDTO
-        {
-            Category =  z.Key,
-            Spend = z.Sum(x => x.Total)
-        }).ToListAsync();
+        var data = await dService.GetDashboardFilteredDataAsync(userId, d1, d2);
 
         return Ok(data);
     }

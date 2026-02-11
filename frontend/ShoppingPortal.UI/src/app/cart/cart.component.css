@@ -77,6 +77,10 @@
 
 .quantity-control {
   margin: 10px 0;
+  display: flex;
+  margin-top: 8px;
+  gap: 3px;
+  align-items: center;
 }
 
 .quantity-control label{
@@ -86,18 +90,47 @@
   font-weight: 500;
 }
 
-.quantity-input {
-  width: 80px;
-  padding: 8px;
-  border: 1px solid #f8bbd9;
-  border-radius: 4px;
-  text-align: center;
-  font-size: 14px;
+.qty-btn{
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #f43f5e, #be123c);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
 }
 
-.quantity-input:focus {
-  outline: none;
-  border-color: #e91e63;
+.qty-btn:hover{
+  transform: scale(1.08);
+  box-shadow: 0 4px 10px rgba(244, 63, 94, 0.35);
+}
+
+.qty-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.qty-btn:disabled{
+  background: #d1d5db;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.qty-value{
+  min-width: 24px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 15px;
+  color: #111827;
 }
 
 .total-price {

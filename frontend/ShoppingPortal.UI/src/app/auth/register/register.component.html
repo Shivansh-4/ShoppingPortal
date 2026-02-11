@@ -57,7 +57,7 @@
             
             <button class="register-button">Register</button>
             <small class="error">
-                <span *ngIf="error">Registration failed. Please try again.</span>
+                <span *ngIf="error"> {{ errorMessage }} </span>
             </small>
             <p>Already have an account? <a routerLink="/login">Login</a></p>
         

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +8,9 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   private url = 'http://localhost:5241/api/auth/login';
+
+  private roleSubject = new BehaviorSubject<string | null>(sessionStorage.getItem('role'));
+  role$ = this.roleSubject.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -18,6 +21,7 @@ export class AuthService {
   saveAuth(token: string, role: string): void{
     sessionStorage.setItem('token', token);
     sessionStorage.setItem('role', role);
+    this.roleSubject.next(role);
   }
 
   register(data: {name:string, email:string, password:string}): Observable<any>{
@@ -26,5 +30,6 @@ export class AuthService {
   
   logout(): void{
     sessionStorage.clear();
+    this.roleSubject.next(null);
   }
 }

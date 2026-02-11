@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../services/cart.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -15,11 +16,13 @@ export class HeaderComponent implements OnInit{
   isAdmin = false;
   cartCount = 0;
 
-  constructor( private router: Router, private cartService: CartService) { }
+  constructor( private router: Router, private cartService: CartService, private authService: AuthService) { }
 
   ngOnInit(): void {
-    const role = sessionStorage.getItem('role');
-    this.isAdmin = role === 'Admin';
+    this.authService.role$.subscribe(role => {
+      this.isAdmin = role === 'Admin';
+      this.isLoggedin = !!role;
+    })
 
     this.cartService.cart$.subscribe(i => {
       //this.cartCount = i.reduce((sum, c) => sum += c.quantity, 0)

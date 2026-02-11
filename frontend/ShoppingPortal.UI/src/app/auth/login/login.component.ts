@@ -15,6 +15,7 @@ export class LoginComponent{
   loginForm: FormGroup;
   submitted = false;
   error = false;
+  errorMessage: string = '';
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -45,6 +46,7 @@ export class LoginComponent{
       },
       error: (err) =>{
         this.error = true;
+        this.errorMessage = err.error?.message || 'Please try again';
       }
     });
   }

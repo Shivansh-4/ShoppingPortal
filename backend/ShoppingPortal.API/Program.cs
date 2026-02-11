@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ShoppingPortal.API.Helper;
+using ShoppingPortal.API.Middleware;
+using ShoppingPortal.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,16 +50,22 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddScoped<JwtHelper>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
 app.UseCors();
+
+app.UseMiddleware<CustomMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();

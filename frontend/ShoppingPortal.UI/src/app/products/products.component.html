@@ -51,7 +51,7 @@
     <div class="filter-section">
         <label>Filter By Category: </label>
         <select [(ngModel)]="selectedCategoryFilter" (ngModelChange)="filterProductsByCat($event)" class="filter-select">
-            <option value="">All</option>            
+            <option [ngValue]="null">All</option>
             <option *ngFor="let cat of categories" [ngValue]="cat.categoryId">{{ cat.categoryName }}</option>
         </select>
     </div>
@@ -70,16 +70,18 @@
                 <span class="out-of-stock" *ngIf="item.stock <= 0">Out of Stock</span>
             </div>
 
-            <div class="quantity-section" *ngIf="item.stock > 0">
+            <div class="quantity-section" *ngIf="IsInCart(item.productId)">
                 <label>Quantity: </label>
-                <input type="number" min="1" [max]="item.stock" step="1" [(ngModel)]="item.quantity" class="quantity-input" />
+                <button (click)="decrease(item.productId)" class="qty-btn">-</button>
+                <span class="qty-value"> {{ getQty(item.productId) }} </span>
+                <button (click)="increase(item.productId)" [disabled]="getQty(item.productId) >= item.stock" class="qty-btn">+</button>
             </div>
 
-            <div class="total-price" *ngIf="item.quantity > 0">
-                Total: ₹{{ item.quantity * item.price }}
+            <div class="total-price" *ngIf="getQty(item.productId) > 0">
+                Total: ₹{{ getQty(item.productId) * item.price }}
             </div>
 
-            <button (click)="addToCart(item)" [disabled]="item.stock === 0 || !item.quantity || item.quantity <= 0" class="add-to-cart-btn">
+            <button *ngIf="!IsInCart(item.productId)" (click)="addToCart(item)" [disabled]="item.stock === 0" class="add-to-cart-btn">
                 Add to Cart
             </button>
         </div>

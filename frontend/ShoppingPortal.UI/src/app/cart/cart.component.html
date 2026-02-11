@@ -15,10 +15,11 @@
       <p class="Price">Price: ₹{{ item.price }} </p>
       <div class="quantity-control">
         <label>Quantity: </label>
-        <input type="text" class="quantity-input" min="1" [max]="item.stock" [(ngModel)]="item.quantity"
-        (ngModelChange)="updateQuantity(item.productId, item.quantity)">
+        <button (click)="decrease(item.productId)" class="qty-btn">-</button>
+        <span class="qty-value"> {{ getQty(item.productId) }} </span>
+        <button (click)="increase(item.productId)" class="qty-btn" [disabled]="getQty(item.productId) >= item.stock">+</button>
       </div>
-      <p class="total-price">Total: ₹{{ item.quantity * item.price }} </p>
+      <p class="total-price">Total: ₹{{ getQty(item.productId) * item.price }} </p>
     </div>
 
     <button type="button" (click)="removeItem(item.productId)" class="remove-btn">Remove</button>

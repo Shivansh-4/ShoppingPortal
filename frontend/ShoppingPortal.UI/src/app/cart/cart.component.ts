@@ -54,4 +54,16 @@ export class CartComponent implements OnInit{
       }
     });
   }
+
+  increase(productId: number){
+    this.cartService.increaseQuantity(productId);
+  }
+
+  decrease(productId: number){
+    this.cartService.decreaseQuantity(productId);
+  }
+
+  getQty(productId: number){
+    return this.cartService.getQuantity(productId);
+  }
 }

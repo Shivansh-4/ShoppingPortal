@@ -15,6 +15,7 @@ export class RegisterComponent {
   signupForm: FormGroup;
   submitted = false;
   error = false;
+  errorMessage: string = '';
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
@@ -38,11 +39,13 @@ export class RegisterComponent {
 
     this.authService.register(this.signupForm.value).subscribe({
       next:(res) => {
+        this.error = false;
         alert('Registration Successful');
 
         this.router.navigate(['/login']);
       }, error: (err) =>{
         this.error = true;
+        this.errorMessage = err.error?.message || 'Please try again';
       }
     });
   }

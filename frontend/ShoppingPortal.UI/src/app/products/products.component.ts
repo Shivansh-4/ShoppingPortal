@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product, ProductService } from '../services/product.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from "@angular/forms";
-import { CartService } from '../services/cart.service';
+import { CartItem, CartService } from '../services/cart.service';
 import { RouterLink } from "@angular/router";
 import { Category, CategoryService } from '../services/category.service';
 import { filter } from 'rxjs';
@@ -22,6 +22,7 @@ export class ProductsComponent implements OnInit{
   products: Product[] = [];
   filteredProducts: Product[] = [];
   loading = true;
+  cart: CartItem[] = [];
 
   constructor(private productService: ProductService,
     private cartService: CartService,
@@ -42,16 +43,20 @@ export class ProductsComponent implements OnInit{
     this.catService.GetCategories().subscribe(cats => {
       this.categories = cats;
     });
+
+    this.cartService.cart$.subscribe({
+      next: (cart) => {
+        this.cart = cart;
+      }
+    })
   }
 
   addToCart(p: Product): void{
-    if(!p.quantity || p.quantity <= 0) return;
-
-    this.cartService.addToCart({
+      this.cartService.addToCart({
       productId: p.productId,
       productName: p.productName,
       price: p.price,
-      quantity: p.quantity,
+      quantity: 1,
       imageUrl: p.imageUrl,
       stock: p.stock
     });
@@ -61,9 +66,9 @@ export class ProductsComponent implements OnInit{
     return quantity * price;
   }
 
-  filterProductsByCat(CatId: number){
-
-    if(!CatId){
+  filterProductsByCat(CatId: number | null){
+    console.log(`called with ${CatId}`);
+    if(!CatId || CatId == null){
       this.isFiltered = false;
       return;
     }
@@ -81,5 +86,22 @@ export class ProductsComponent implements OnInit{
 
   get displayedProducts(){
     return this.isFiltered ? this.filteredProducts : this.products;
+  }
+
+  increase(id: number){
+    this.cartService.increaseQuantity(id);
+  }
+
+
+  decrease(id: number){
+    this.cartService.decreaseQuantity(id);
+  }
+
+  getQty(id: number){
+    return this.cartService.getQuantity(id);
+  }
+
+  IsInCart(id: number): boolean{
+    return this.cartService.getQuantity(id) > 0;
   }
 }

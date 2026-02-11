@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ShoppingPortal.API.Data;
-using ShoppingPortal.API.DTOs;
+using ShoppingPortal.API.Services;
 
 namespace ShoppingPortal.API.Controllers;
 
@@ -9,21 +7,17 @@ namespace ShoppingPortal.API.Controllers;
 [Route("api/categories")]
 public class CategoryController: ControllerBase
 {
-    private readonly ShoppingPortalDbContext dc;
+    private readonly ICategoryService cService;
 
-    public CategoryController(ShoppingPortalDbContext context)
+    public CategoryController(ICategoryService service)
     {
-        dc = context;
+        cService = service;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetCategories()
     {
-        var categories = await dc.Categories.Select(c => new CategoryResponseDTO
-        {
-            CategoryId = c.CategoryId,
-            CategoryName = c.CategoryName
-        }).ToListAsync();
+        var categories = await cService.GetAllCategoriesAsync();
 
         return Ok(categories);
     }
